@@ -1,0 +1,495 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "gpuType": "T4",
+      "mount_file_id": "1BAri2_24ruTRHa4qIEGhAQJxNLudXx3U",
+      "authorship_tag": "ABX9TyOEwOmq+kDGIiFpOE/xtmk2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Eavox/AutoGPT/blob/master/GGPT_v1_2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install openai\n",
+        "!pip install pydrive\n",
+        "!pip install google-api-python-client\n",
+        "!pip install oauth2client\n",
+        "!pip install gensim\n",
+        "!pip install beautifulsoup4\n",
+        "!pip install google-auth-httplib2\n",
+        "!pip install google-auth-oauthlib\n",
+        "!pip install numpy"
+      ],
+      "metadata": {
+        "id": "rp4M2kRzaklV"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8Z8whczyv1cQ",
+        "outputId": "7687971d-077d-45b3-8504-d61f4fda78c5"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: numpy in /usr/local/lib/python3.10/dist-packages (1.23.5)\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import sys\n",
+        "sys.path.append('/content/GGPT')\n",
+        "import main_config\n",
+        "\n",
+        "main_config.main()"
+      ],
+      "metadata": {
+        "id": "JSSTqXuoVhFR"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "\n",
+        "def clear_memory(history_file='/content/GGPT/memory_conversation.json'):\n",
+        "    if os.path.exists(history_file):\n",
+        "        os.remove(history_file)\n",
+        "        print(\"Memory cleared.\")\n",
+        "    else:\n",
+        "        print(\"Memory file does not exist.\")\n",
+        "\n",
+        "# Appeler la fonction pour supprimer la mémoire\n",
+        "clear_memory()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "OlKNk6ZEtGVp",
+        "outputId": "94feb531-8045-410e-8d11-5ca9461af13a"
+      },
+      "execution_count": 148,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Memory cleared.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%cd /content/GGPT\n",
+        "\n",
+        "!git config --global user.email \"tiwilliam8@gmail.com\"\n",
+        "!git config --global user.name \"Eavox\"\n",
+        "\n",
+        "!git add .\n",
+        "!git commit -m \"First commit\"\n",
+        "!git push origin Development\n",
+        "\n",
+        "!git push git@github.com:Eavox/GGPT.git"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "1bs8_4URTT2G",
+        "outputId": "93485082-5b3a-43f5-9bbb-07ebf3a7b48e"
+      },
+      "execution_count": 168,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "/content/GGPT\n",
+            "On branch main\n",
+            "nothing to commit, working tree clean\n",
+            "error: src refspec Development does not match any\n",
+            "\u001b[31merror: failed to push some refs to 'github.com:Eavox/GGPT.git'\n",
+            "\u001b[mHost key verification failed.\n",
+            "fatal: Could not read from remote repository.\n",
+            "\n",
+            "Please make sure you have the correct access rights\n",
+            "and the repository exists.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!pip install importlib"
+      ],
+      "metadata": {
+        "id": "TFivRI8Oig8t"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import importlib\n",
+        "import sys\n",
+        "sys.path.append('/content/GGPT')\n",
+        "import main_config\n",
+        "import gpt_utils\n",
+        "import drive_utils\n",
+        "import config_manager\n",
+        "\n",
+        "importlib.reload(main_config)\n",
+        "importlib.reload(drive_utils)\n",
+        "importlib.reload(config_manager)\n",
+        "importlib.reload(gpt_utils)\n",
+        "importlib.reload(drive_utils)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "52GlCMpjioEm",
+        "outputId": "16dc83bc-ce58-4272-be85-f498f77af3f6"
+      },
+      "execution_count": 164,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<module 'drive_utils' from '/content/GGPT/drive_utils.py'>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 164
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "# from gpt_utils import summarize_document\n",
+        "# from google.colab import auth\n",
+        "# from googleapiclient.http import MediaIoBaseDownload\n",
+        "# from googleapiclient.discovery import build\n",
+        "# from oauth2client.client import GoogleCredentials\n",
+        "# from pydrive.auth import GoogleAuth\n",
+        "# from pydrive.drive import GoogleDrive\n",
+        "# from bs4 import BeautifulSoup\n",
+        "# import pandas as pd\n",
+        "# import openai\n",
+        "# import io\n",
+        "# import json\n",
+        "# import os\n",
+        "\n",
+        "# def connect_to_google_drive():\n",
+        "#     \"\"\"\n",
+        "#     Authenticate and initialize a Google Drive service object for interacting with Google Drive.\n",
+        "#     \"\"\"\n",
+        "#     auth.authenticate_user()  # Use Google Colab's authentication to authenticate the user.\n",
+        "#     gauth = GoogleAuth()  # Initialize GoogleAuth object.\n",
+        "#     drive = GoogleDrive(gauth)  # Create a GoogleDrive object to interact with Google Drive.\n",
+        "\n",
+        "#     # Obtain Google credentials and create a Google Drive service object.\n",
+        "#     credentials = GoogleCredentials.get_application_default()\n",
+        "#     drive_service = build('drive', 'v3', credentials=credentials)\n",
+        "#     return drive_service  # Return the initialized Google Drive service object.\n",
+        "\n",
+        "# def interact_with_drive(drive_service, configuration_manager):\n",
+        "#     \"\"\"\n",
+        "#     Facilitates interaction with Google Drive, allowing the user to select and process a file.\n",
+        "#     \"\"\"\n",
+        "#     print(\"Interacting with Google Drive...\")\n",
+        "#     # Search and select a folder in Google Drive.\n",
+        "#     selected_folder_id = search_and_select_drive_folders(drive_service, configuration_manager)\n",
+        "#     if selected_folder_id is None:\n",
+        "#         print(\"No folder selected.\")\n",
+        "#         configuration_manager.append_message(\"system\", \"No folder selected.\")\n",
+        "#         return\n",
+        "\n",
+        "#     # List files in the selected folder.\n",
+        "#     query = f\"'{selected_folder_id}' in parents and trashed=false\"\n",
+        "#     results = drive_service.files().list(q=query, pageSize=10, fields=\"nextPageToken, files(id, name, mimeType)\").execute()\n",
+        "#     items = results.get('files', [])\n",
+        "\n",
+        "#     if not items:\n",
+        "#         print('No files found in the selected folder.')\n",
+        "#         configuration_manager.append_message(\"system\", \"No files found in the selected folder.\")\n",
+        "#         return\n",
+        "\n",
+        "#     print('Please select a file from the list:')\n",
+        "#     for i, item in enumerate(items):\n",
+        "#         print(f\"{i + 1}. {item['name']} (ID: {item['id']})\")\n",
+        "\n",
+        "#     selection = int(input()) - 1  # User selects a file by number.\n",
+        "#     selected_file_id = items[selection]['id']\n",
+        "#     selected_file_name = items[selection]['name']\n",
+        "\n",
+        "#     # Append selected file information to the conversation history.\n",
+        "#     configuration_manager.append_message(\"system\", f\"Selected file ID: {selected_file_id}, Name: {selected_file_name}\")\n",
+        "\n",
+        "#     file_content = download_file_by_id(selected_file_id, drive_service)  # Download the selected file's content.\n",
+        "\n",
+        "#     if not file_content:\n",
+        "#         print(\"Failed to download the file or the file is empty.\")\n",
+        "#         configuration_manager.append_message(\"system\", \"Failed to download the file or the file is empty.\")\n",
+        "#         return\n",
+        "\n",
+        "#     # Generate embedding for the text\n",
+        "#     embeddings = configuration_manager.generate_embeddings(file_content[:10000])\n",
+        "#     # TEST if embeddings are generate\n",
+        "#     print(\"Generated embeddings:\", embeddings)\n",
+        "#     # Pour un log dans un fichier, vous pourriez faire :\n",
+        "#     with open(\"embeddings_log.txt\", \"a\") as file:\n",
+        "#         file.write(str(embeddings) + \"\\n\")\n",
+        "\n",
+        "#     prompt_content = file_content[:10000]  # Limit content to 10,000 characters for processing.\n",
+        "#     print(\"Would you like to summarize the document? (yes/no)\")\n",
+        "#     if input().lower().strip() == \"yes\":\n",
+        "#         summary = summarize_document(file_content, configuration_manager)  # Summarize the document if requested.\n",
+        "#         print(\"Document Summary:\\n\", summary)\n",
+        "#         configuration_manager.append_message(\"system\", f\"Document Summary: {summary}.\" f\"{prompt_content}\")\n",
+        "#     else:\n",
+        "#         print(\"Displaying document content:\\n\", prompt_content[:10000])  # Display part of the document content.\n",
+        "#         configuration_manager.append_message(\"system\", f\"Displaying document content : {prompt_content}.\")\n",
+        "\n",
+        "# def search_and_select_drive_folders(drive_service, configuration_manager):\n",
+        "#     \"\"\"\n",
+        "#     Allows the user to search for and select a Google Drive folder.\n",
+        "#     \"\"\"\n",
+        "#     search_query = input(\"Enter the name of the folder to search for (leave blank to list all): \")\n",
+        "#     query = f\"mimeType='application/vnd.google-apps.folder' and name contains '{search_query}' and trashed=false\" if search_query else \"mimeType='application/vnd.google-apps.folder' and trashed=false\"\n",
+        "#     results = drive_service.files().list(q=query, pageSize=10, fields=\"nextPageToken, files(id, name)\").execute()\n",
+        "#     items = results.get('files', [])\n",
+        "#     if not items:\n",
+        "#         print(\"No folder found.\")\n",
+        "#         return None\n",
+        "#     else:\n",
+        "#         print(\"Select a folder by typing its number:\")\n",
+        "#         for i, item in enumerate(items):\n",
+        "#             print(f\"{i + 1}. {item['name']} (ID: {item['id']})\")\n",
+        "#         selection = int(input()) - 1  # User selects a folder by number.\n",
+        "#         return items[selection]['id']  # Return the selected folder's ID.\n",
+        "\n",
+        "# def download_file_by_id(file_id, drive_service, configuration_manager=None):\n",
+        "#     \"\"\"\n",
+        "#     Downloads a file by its ID from Google Drive, handling different file types appropriately.\n",
+        "#     \"\"\"\n",
+        "#     file_metadata = drive_service.files().get(fileId=file_id, fields='mimeType, name').execute()\n",
+        "#     mimeType = file_metadata['mimeType']\n",
+        "\n",
+        "#     if mimeType.startswith('application/vnd.google-apps.'):\n",
+        "#         export_mimeType = None\n",
+        "#         if mimeType == 'application/vnd.google-apps.document':\n",
+        "#             export_mimeType = 'text/html'\n",
+        "#         elif mimeType == 'application/vnd.google-apps.spreadsheet':\n",
+        "#             export_mimeType = 'text/csv'\n",
+        "\n",
+        "#         if export_mimeType:\n",
+        "#             request = drive_service.files().export_media(fileId=file_id, mimeType=export_mimeType)\n",
+        "#             fh = io.BytesIO()\n",
+        "#             downloader = MediaIoBaseDownload(fh, request)\n",
+        "#             done = False\n",
+        "#             while not done:\n",
+        "#                 _, done = downloader.next_chunk()\n",
+        "#             fh.seek(0)\n",
+        "\n",
+        "#             if mimeType == 'application/vnd.google-apps.document':\n",
+        "#                 # Convert HTML to plain text for documents.\n",
+        "#                 soup = BeautifulSoup(fh.getvalue(), 'html.parser')\n",
+        "#                 return ' '.join(soup.stripped_strings)\n",
+        "#             elif mimeType == 'application/vnd.google-apps.spreadsheet':\n",
+        "#                 # Convert CSV data to a string format using pandas for spreadsheets.\n",
+        "#                 df = pd.read_csv(fh)\n",
+        "#                 return df.to_csv(index=False)\n"
+      ],
+      "metadata": {
+        "id": "C8lfKKkw4usg"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# import openai\n",
+        "\n",
+        "\n",
+        "# #OpenAI Api key and language model\n",
+        "\n",
+        "# client = openai.OpenAI(api_key=\"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\")\n",
+        "# model = \"gpt-3.5-turbo\"\n",
+        "# model_embbeddings = \"text-embedding-3-small\"\n",
+        "\n",
+        "\n",
+        "\n"
+      ],
+      "metadata": {
+        "id": "F0h3eNTI4vDH"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# from config_manager import model, model_embbeddings, client\n",
+        "# import openai\n",
+        "# import sys\n",
+        "# # Adds a specified directory to Python's system path, allowing the import of modules from that directory.\n",
+        "# sys.path.append('/content/GGPT')\n",
+        "\n",
+        "# class ConfigurationManager:\n",
+        "#     def __init__(self):\n",
+        "#         # Initializes the conversation history with a system message.\n",
+        "#         self.messages = [{\"role\": \"system\", \"content\": \"You are GGPT an helpful assistant that can interact with Google Drive\"}]\n",
+        "\n",
+        "#     def append_message(self, role, content):\n",
+        "#         # Adds a new message to the conversation history.\n",
+        "#         self.messages.append({\"role\": role, \"content\": content})\n",
+        "\n",
+        "#     def chat_with_gpt(self):\n",
+        "#         # Sends the conversation history to the AI model and appends the model's response.\n",
+        "#         response = client.chat.completions.create(\n",
+        "#             model=model,\n",
+        "#             messages=self.messages\n",
+        "#         )\n",
+        "#         # Strips whitespace from the AI response and appends it to the history.\n",
+        "#         self.append_message(\"assistant\", response.choices[0].message.content.strip())\n",
+        "#         return response.choices[0].message.content.strip()\n",
+        "\n",
+        "#     def print_messages(self):\n",
+        "#         # Prints each message in the conversation history.\n",
+        "#         for message in self.messages:\n",
+        "#             print(f\"{message['role'].title()}: {message['content']}\")\n",
+        "\n",
+        "#     def generate_embeddings(self, text, model=\"text-embedding-3-small\"): # Model2 is a embedding model.\n",
+        "#           text = text.replace(\"\\n\", \" \")\n",
+        "#           response =  client.embeddings.create(input = [text], model=model)\n",
+        "#           embeddings  = (response).data[0].embedding\n",
+        "#           return embeddings\n",
+        "\n",
+        "\n",
+        "# def summarize_document(content, configuration_manager):\n",
+        "#     \"\"\"\n",
+        "#     Generates a concise summary of the provided document content.\n",
+        "#     \"\"\"\n",
+        "#     try:\n",
+        "#         # Limit the document content for summarization to fit model token limits.\n",
+        "#         prompt = f\"Summarize this document in less then 5 sentences:\\n{content[:4000]}\"\n",
+        "#         response = client.chat.completions.create(\n",
+        "#             model=model,\n",
+        "#             messages=[\n",
+        "#                 {\"role\": \"system\", \"content\": \"You are an assistant skilled in writing summaries.\"},\n",
+        "#                 {\"role\": \"user\", \"content\": prompt}\n",
+        "#             ],\n",
+        "#             max_tokens=150\n",
+        "#         )\n",
+        "#         # Retrieves and strips the AI-generated summary.\n",
+        "#         summary = response.choices[0].message.content.strip()\n",
+        "#         # Adds the summary to the conversation history, indicating it's provided by the assistant.\n",
+        "#         configuration_manager.append_message(\"assistant\", f\"Here is a summary of the document we discussed: {summary}\")\n",
+        "#         return summary\n",
+        "\n",
+        "#     except Exception as e:\n",
+        "#         # Handles exceptions by logging an error message and returning a default error response.\n",
+        "#         error_message = f\"Error generating summary: {e}\"\n",
+        "#         configuration_manager.append_message(\"system\", error_message)\n",
+        "#         return \"Sorry, I can't generate a summary at this moment.\"\n"
+      ],
+      "metadata": {
+        "id": "fFnqAn-N4vW6"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# import sys\n",
+        "# # Adds a specified directory to Python's system path, allowing the import of modules from that directory.\n",
+        "# sys.path.append('/content/GGPT')\n",
+        "\n",
+        "# from drive_utils import connect_to_google_drive, interact_with_drive\n",
+        "# from gpt_utils import ConfigurationManager\n",
+        "# import os\n",
+        "\n",
+        "# def main():\n",
+        "#     # Initializes connection to Google Drive and creates a configuration manager instance.\n",
+        "#     drive_service = connect_to_google_drive()\n",
+        "#     configuration_manager = ConfigurationManager()\n",
+        "\n",
+        "#     while True:\n",
+        "#         # Continuously listens for user input until a stop command is received.\n",
+        "#         user_input = input(\"You: \").strip()\n",
+        "\n",
+        "#         if user_input.lower() in [\"stop\", \"quit\"]:\n",
+        "#             # If the user enters 'stop' or 'quit', the loop breaks after printing goodbye message and any final messages.\n",
+        "#             print(\"Goodbye!\")\n",
+        "#             configuration_manager.print_messages()\n",
+        "#             break\n",
+        "\n",
+        "#         elif user_input.lower() in [\"open drive\", \"check my drive\"]:\n",
+        "#             # Special commands to interact with Google Drive, bypassing the chat functionality.\n",
+        "#             interact_with_drive(drive_service, configuration_manager)\n",
+        "#             continue\n",
+        "\n",
+        "#         # For other inputs, appends the message to the configuration manager and generates a response.\n",
+        "#         configuration_manager.append_message(\"user\", user_input)\n",
+        "#         gpt_response = configuration_manager.chat_with_gpt()\n",
+        "#         print(f\"GGpt: {gpt_response}\")\n",
+        "\n",
+        "# # Ensures that the `main` function is called only when this script is executed directly, not when imported.\n",
+        "# if __name__ == \"__main__\":\n",
+        "#     main()\n"
+      ],
+      "metadata": {
+        "id": "0CqKAds24vlC"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
